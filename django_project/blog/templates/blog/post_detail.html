@@ -1,0 +1,91 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }} "/>
+                <a class="mr-2"
+                   href="{% url 'profile' object.author.id object.author.username %}"> {{ object.author }} </a>
+                <small class="text-muted"> {{ object.post_date|date:"N d, o" }} </small>
+                <small class="float-right">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button value="like_post" name="like" type="submit" class="mt-1 mb-1 btn">
+                            <img title="Found this useful" src="{% static 'blog/rating_icon.svg' %}"/>
+                            <div></div>
+                            <small class="ml-1">{{ object.rating }}</small>
+                        </button>
+
+                    </form>
+                </small>
+                {% if object.author == user or user.is_superuser %}
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1 btn-light"
+                       href="{% url 'post-update' object.id object.title %}">Edit</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id object.title %}">Delete</a>
+                {% endif %}
+            </div>
+            <h2 class="article-title"> {{ object.title }}  </h2>
+            <p class="article-content"> {{ object.content }} </p>
+
+
+        </div>
+    </article>
+    {% if comments %}
+        <h2 class="article-title"> {% if comments|length > 1 %} {{ comments|length }} Answers {% else %} 1
+            Answer {% endif %}</h2>
+        {% for comment in comments %}
+
+            {% if comment.is_approved %}
+                <article class="media content-section" style="border-color: green; border-width: medium">
+            {% else %}
+                <article class="media content-section">
+            {% endif %}
+        <div class="article-metadata">
+            <img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }} "/>
+            <a class="mr-2"
+               href="{% url 'profile' comment.author.id comment.author.username %}"> {{ comment.author.username }} </a>
+            <small class="text-muted"> {{ comment.created_date|date:"N d, o" }} </small>
+            {% if comment.author == user or user.is_superuser %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1 btn-light " href="{% url 'comment-update' comment.id %}">Edit</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
+            {% endif %}
+            {% if comment.is_approved %}
+                <img width="40px" src="{% static 'blog/solved_question.svg' %}" class="pull-right"
+                     style="margin-top: 0">
+            {% endif %}
+            <p class="article-content">{{ comment.content }}</p>
+            {% if user == comment.question.author and comment.question.is_answered is False %}
+                    <form method="POST"
+                          action={% url 'post-detail' comment.question.id comment.question.title comment.id %}>
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-sm mt-1 mb-1 btn-success" value="Solved my question"
+                               name='question_solved'/>
+                    </form>
+            {% endif %}
+
+        </div>
+        </article>
+        {% endfor %}
+    {% endif %}
+
+    <article class="media content-section">
+
+        <div class="article-title w-100">
+            <h2 class="article-title"> Your Answer: </h2>
+            <div class="media-body">
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <button class="btn btn-outline-warning mb-4" name="add_comment" type="submit" value="add_comment"
+                            href="#">Post your comment
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </article>
+{% endblock content %}
+

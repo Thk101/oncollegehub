@@ -1,0 +1,71 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+    {% if not list_result %}
+        {% for post in posts %}
+            <article class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }} "/>
+                        <a class="mr-2"
+                           href="{% url 'profile' post.author.id post.author.username %}">{{ post.author }}</a>
+                        <small class="text-muted">{{ post.post_date|date:"N d, o" }}</small>
+                        <div class="float-right mt-1">
+                            <img src="{% static 'blog/rating_icon.svg' %}" alt="Ratings">
+                            <div></div>
+                            <small class="ml-2">{{ post.rating }}</small>
+                        </div>
+                        <span class="badge">{{ post.college }}</span>
+                    </div>
+
+                    <h6><a class="article-title" href="{% url 'post-detail' post.id post.title %}">{{ post.title }}</a>
+                    </h6>
+                </div>
+            </article>
+        {% endfor %}
+        {% if posts %}
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page= {{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page= {{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        {% else %}
+            {% for result in list_result %}
+                <article class="media content-section">
+                    <div class="media-body">
+
+                        <div class="article-metadata">
+                            <img class="rounded-circle article-img" src="{{ result.author.profile.image.url }} "/>
+                            <a class="mr-2"
+                               href="{% url 'profile' result.author.id result.author.username %}">{{ result.author }}</a>
+                            <small class="text-muted">{{ result.post_date|date:"N d, o" }}</small>
+                            <div class="float-right mt-1">
+                                <img src="{% static 'blog/rating_icon.svg' %}" alt="Ratings">
+                                <div></div>
+                                <small class="ml-2">{{ result.rating }}</small>
+                            </div>
+                            <h2><a class="article-title"
+                                   href="{% url 'post-detail' result.id result.title %}">{{ result.title }}</a></h2>
+                            <a href="{% url 'post-detail' result.id result.title %}">
+                                Click here for more details.
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}
+
