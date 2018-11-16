@@ -21,7 +21,7 @@ def get_college_ranking(context):
     college_ranking = College.objects.annotate(question_count=Count('question')) \
         .order_by('-question_count')
     try:
-        context['college_ranking'] = college_ranking
+        context['college_ranking'] = college_ranking[0:4]
     finally:
         return context
 
@@ -30,7 +30,7 @@ def get_student_ranking(context):
     student_ranking = Student.objects.annotate(answer_count=Count('answer')) \
         .order_by('-answer_count')
     try:
-        context['student_ranking'] = student_ranking
+        context['student_ranking'] = student_ranking[0:4]
     finally:
         return context
 

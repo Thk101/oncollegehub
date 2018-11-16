@@ -75,28 +75,26 @@
         {% block ranking %}
             <div class="col-md-4">
             <div class="content-section">
-                <h4>College Ranking:</h4>
+                <h4>Top Colleges</h4>
 
                 {#                <form action="" method="GET">#}
                 {#                    <span class="fa fa-search form-control-feedback"></span>#}
                 {#                    <input type="text" class="form-control" name="f" placeholder="Search ..">#}
                 {#                    <br>#}
                 {% if  college_ranking %}
-                    <ul class="list-group">
-                        {% for college in college_ranking %}
+                        {% for college in college_ranking%}
                             <a href="{% url 'blog-college' college.id college.name %}">
-                                <li class="list-group-item list-group-item">{{ college.name }}<span
-                                        class="badge badge-dark">{{ college.question_set.all|length }}</span></li>
+                                <li class="list-group-item list-group-item">{{ college.name}} <span
+                                        class="badge badge-dark">{{college.question_set.all|length }}</span></li>
                             </a>
                         {% endfor %}
-                    </ul>
                 {% else %}
                     <h6 class="text-muted">Ranking empty...</h6>
                 {% endif %}
                 </form>
             </div>
             <div class="content-section">
-                <h4>Student Ranking:</h4>
+                <h4>Top Students</h4>
                 <span class="fa fa-search form-control-feedback"></span>
 
                 {% if student_ranking %}

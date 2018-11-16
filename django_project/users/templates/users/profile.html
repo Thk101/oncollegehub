@@ -13,7 +13,8 @@
                         {% if user.profile in followers %}
                             <button class="btn btn-primary" value="unfollow" name="unfollow">Unfollow</button>
                         {% else %}
-                            <button class="btn btn-primary" value="follow" name="follow">Follow</button>
+                            <h4></h4>
+                            <button class="btn btn-sm btn-primary" value="follow" name="follow">Follow</button>
                         {% endif %}
                     {% endif %}
                 </form>
@@ -47,12 +48,7 @@
                 {% endif %}
                 <legend class="border-bottom mb-4">Profile info:</legend>
                 <div class="media-body">
-                    <h4>First name </h4>
-                    <p class="text-secondary">{{ user_object.first_name }}</p>
-                    <h4>Last name </h4>
-                    <p class="text-secondary">{{ user_object.last_name }}</p>
-                    <h4>Email</h4>
-                    <p class="text-secondary">{{ user_object.email }}</p>
+
                     <h4>College</h4>
                     <p class="text-secondary">{{ user_object.college.name }}</p>
 
