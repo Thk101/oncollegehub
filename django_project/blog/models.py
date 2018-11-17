@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 # from django.contrib.auth.models import User
 from users.models import Student, College
 from django.urls import reverse
@@ -8,7 +9,7 @@ from django.core import validators
 
 class AbstractPostModel(models.Model):
     title = models.CharField(null=False, max_length=100)
-    content = models.TextField(validators.MinLengthValidator(10), null=False)
+    content = models.TextField(validators=[validators.MinLengthValidator(10)], null=False)
     post_date = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(Student, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
