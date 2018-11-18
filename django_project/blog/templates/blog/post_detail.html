@@ -5,29 +5,29 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }} "/>
+                <img class="rounded-circle article-img" src="{{ posts.author.profile.image.url }} "/>
                 <a class="mr-2"
-                   href="{% url 'profile' object.author.id object.author.username %}"> {{ object.author }} </a>
-                <small class="text-muted"> {{ object.post_date|date:"N d, o" }} </small>
+                   href="{% url 'profile' posts.author.id posts.author.username %}"> {{ posts.author }} </a>
+                <small class="text-muted"> {{ posts.post_date|date:"N d, o" }} </small>
                 <small class="float-right">
                     <form method="POST">
                         {% csrf_token %}
                         <button value="like_post" name="like" type="submit" class="mt-1 mb-1 btn">
-                            <img title="Found this useful" src="{% static 'blog/rating_icon.svg' %}"/>
+                            <img title="Found this useful" src="{% static 'blog/like.svg' %}"/>
                             <div></div>
-                            <small class="ml-1">{{ object.rating }}</small>
+                            <small class="ml-1">{{ posts.rating }}</small>
                         </button>
 
                     </form>
                 </small>
-                {% if object.author == user or user.is_superuser %}
+                {% if posts.author == user or user.is_superuser %}
                     <a class="btn btn-secondary btn-sm mt-1 mb-1 btn-light"
-                       href="{% url 'post-update' object.id object.title %}">Edit</a>
-                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id object.title %}">Delete</a>
+                       href="{% url 'post-update' posts.id posts.title %}">Edit</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' posts.id posts.title %}">Delete</a>
                 {% endif %}
             </div>
-            <h2 class="article-title"> {{ object.title }}  </h2>
-            <p class="article-content"> {{ object.content }} </p>
+            <h2 class="article-title"> {{ posts.title }}  </h2>
+            <p class="article-content"> {{ posts.content }} </p>
 
 
         </div>

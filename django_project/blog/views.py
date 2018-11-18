@@ -43,7 +43,6 @@ class PostListView(ListView):
     paginate_by = 10
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        print(type(self.model))
         context = super().get_context_data(**kwargs)
         get_college_ranking(context)
         get_student_ranking(context)
@@ -71,6 +70,7 @@ class PostCollegeListView(ListView):
 class PostDetailView(FormMixin, LoginRequiredMixin, DetailView):
     model = Question
     form_class = CommentForm
+    context_object_name = 'posts'
     template_name = 'blog/post_detail.html'
 
     def form_valid(self, form):

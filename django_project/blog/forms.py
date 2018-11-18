@@ -4,7 +4,7 @@ from django import forms
 
 
 class PostForm(ModelForm):
-    title = forms.CharField(max_length=40, min_length=12)
+    title = forms.CharField(max_length=200)
 
     class Meta:
         model = Question

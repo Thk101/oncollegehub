@@ -18,11 +18,9 @@
                         {% endif %}
                     {% endif %}
                 </form>
+                                                        <h4>{{ user_object.username }}</h4>
 
-
-                <h2 class="account-heading">{{ user_object.first_name }}</h2>
-                <p class="text-secondary">{{ user_object.email }}</p>
-                <div class="container media col-sm-4">
+                <div class="container media col-sm-4 mt-5 ">
                     <a href="{% url 'profile-followers' user_object.id user_object.username %}"
                        style="text-decoration: none">
                         <p class="text-secondary mr-4">Followers
@@ -48,11 +46,11 @@
                 {% endif %}
                 <legend class="border-bottom mb-4">Profile info:</legend>
                 <div class="media-body">
-
+                    <h4>Email</h4>
+                    <h6 class="text-secondary">{{ user_object.email }}</h6>
                     <h4>College</h4>
-                    <p class="text-secondary">{{ user_object.college.name }}</p>
-
-
+                    <h6 class="text-secondary">{{ user_object.college.name }}</h6>
+                    <h4>Bio</h4>
 
                 </div>
                 {{ form|crispy }}

@@ -8,7 +8,8 @@ from django.core import validators
 
 
 class AbstractPostModel(models.Model):
-    title = models.CharField(null=False, max_length=100)
+    title = models.CharField(validators=[validators.MinLengthValidator(10)],
+                             null=False, max_length=500)
     content = models.TextField(validators=[validators.MinLengthValidator(10)], null=False)
     post_date = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(Student, on_delete=models.CASCADE)

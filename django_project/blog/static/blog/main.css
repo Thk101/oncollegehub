@@ -3,7 +3,23 @@ body {
     color: #333333;
     margin-top: 5rem;
   }
-  
+
+.author-info{
+    font-size: 0.8em;
+    text-align: end;
+}
+
+a{
+    color: #343a40;
+}
+
+.menu-title{
+    margin-right: 21em;
+}
+  .ranking-content a {
+      width: 45%;
+      font-size: 1em;
+  }
   h1, h2, h3, h4, h5, h6 {
     color: #444444;
   }
@@ -39,7 +55,8 @@ body {
   .article-title {
     color: #444444;
   }
-  
+
+
   a.article-title:hover {
     color: #428bca;
     text-decoration: none;
