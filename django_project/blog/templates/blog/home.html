@@ -6,22 +6,24 @@
             <article class="media content-section">
                 <div class="media-body">
                     <div class="article-metadata">
-                          <div class="float-right">
-                            <img src="{% static 'blog/like.svg' %}" style="width: 35%" alt="Ratings">
+                        <div class="float-right">
+                            <img src="{% static 'blog/like.svg' %}" style="width: 40%" alt="Ratings">
                             <small class="ml-2">{{ post.rating }}</small>
                         </div>
                         <h4 style="display:contents"><a class="article-title menu-title"
-                                                        href="{% url 'post-detail' post.id post.title %}">{{ post.title }}   </a>
+                                                 href="{% url 'post-detail' post.id post.title %}">
+                            {{ post.title }}   </a>
                         </h4>
 
                     </div>
                     <div class="post-content mt-3">
-                        <p>{{ post.content | slice:":100" }} <a href="{% url 'post-detail' post.id post.title %}"> ...</a></p>
+                        <p>{{ post.content | slice:":100" }} <a href="{% url 'post-detail' post.id post.title %}">
+                            ...</a></p>
                         <div class="author-info">
-                        <a href="{% url 'profile' post.author.id post.author.username %}">{{ post.author }}</a>
-                        <small class="text-muted">{{ post.post_date|date:"N d, o" }}</small>
-                        <span class="badge">{{ post.college }}</span>
-                            </div>
+                            <a href="{% url 'profile' post.author.id post.author.username %}">{{ post.author }}</a>
+                            <small class="text-muted">{{ post.post_date|date:"N d, o" }}</small>
+                            <span class="badge">{{ post.college }}</span>
+                        </div>
                     </div>
                 </div>
             </article>

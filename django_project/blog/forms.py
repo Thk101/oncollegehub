@@ -21,3 +21,6 @@ class CommentForm(ModelForm):
         model = Answer
         exclude = ('author', 'post')
         fields = ['content']
+        labels = {
+            "content": "Body",
+        }

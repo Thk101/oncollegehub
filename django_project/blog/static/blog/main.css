@@ -9,8 +9,25 @@ body {
     text-align: end;
 }
 
+.post-edit a{
+    font-size: small;
+}
+
+.post-btn{
+    border-style: double;
+    border-color:#343a40;
+}
+
+.post-btn:hover {
+    background-color: #343a40;
+    color: white;
+}
 a{
     color: #343a40;
+    text-decoration: none !important;
+}
+a:hover{
+    color: #aaaaaa;
 }
 
 .menu-title{
@@ -67,13 +84,13 @@ a{
   }
   
   .article-img {
-    height: 65px;
-    width: 65px;
+    height: 45px;
+    width: 45px;
     margin-right: 16px;
   }
   
   .article-metadata {
-    padding-bottom: 1px;
+    padding-bottom: 10px;
     margin-bottom: 4px;
     border-bottom: 1px solid #e3e3e3
   }
