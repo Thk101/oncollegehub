@@ -223,7 +223,7 @@ class CommentDeleteView(UserPassesTestMixin, DeleteView):
 
 class CommentUpdateView(UpdateView):
     model = Answer
-    template_name = 'blog/post_form.html'
+    template_name = 'blog/comment_form.html'
     fields = ['content']
 
     def get_success_url(self):

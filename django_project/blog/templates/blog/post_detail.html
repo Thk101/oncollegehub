@@ -6,6 +6,7 @@
         <div class="media-body">
             <div class="article-metadata">
                 <div class="float-right">
+
                     <form method="POST">
                         {% csrf_token %}
 
@@ -23,28 +24,28 @@
 
             </div>
             <div class="post-content mt-3">
-            <p class="article-content post-content mt"> {{ posts.content }} </p>
-            <div class="author-info">
-                <img class="rounded-circle article-img" src="{{ posts.author.profile.image.url }} "/>
-                <a href="{% url 'profile' posts.author.id posts.author.username %}">{{ posts.author }}</a>
-                <small class="text-muted">{{ posts.post_date|date:"N d, o" }}</small>
-                <span class="badge">{{ posts.college }}</span>
-                {% if posts.author == user or user.is_superuser %}
-                    <div class="post-edit float-left mt-4 text-muted">
-                        <a class="mt-1 mb-1"
-                           href="{% url 'post-update' posts.id posts.title %}">Edit</a>
-                        <a class=" mt-1 mb-1" href="{% url 'post-delete' posts.id posts.title %}">Delete</a>
-                    </div>
-                {% endif %}
-            </div>
+                <p class="article-content post-content mt"> {{ posts.content }} </p>
+                <div class="author-info">
+                    <img class="rounded-circle article-img" src="{{ posts.author.profile.image.url }} "/>
+                    <a href="{% url 'profile' posts.author.id posts.author.username %}">{{ posts.author }}</a>
+                    <small class="text-muted">{{ posts.post_date|date:"N d, o" }}</small>
+                    <span class="badge">{{ posts.college }}</span>
+                    {% if posts.author == user or user.is_superuser %}
+                        <div class="post-edit float-left mt-4 text-muted">
+                            <a class="mt-1 mb-1"
+                               href="{% url 'post-update' posts.id posts.title %}">Edit</a>
+                            <a class=" mt-1 mb-1" href="{% url 'post-delete' posts.id posts.title %}">Delete</a>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
 
 
         </div>
     </article>
     {% if comments %}
-        <h2 class="article-title"> {% if comments|length > 1 %} {{ comments|length }} Answers {% else %} 1
-            Answer {% endif %}</h2>
+        <h5 class="article-title"> {% if comments|length > 1 %} {{ comments|length }} Answers {% else %} 1
+            Answer {% endif %}</h5>
         {% for comment in comments %}
             {% if comment.is_approved %}
                 <article class="media content-section" style="border-color: green;
@@ -53,29 +54,37 @@
                 <article class="media content-section">
             {% endif %}
         <div class="article-metadata">
-            <img class="rounded-circle article-img" src="{{ comment.author.profile.image.url }} "/>
-            <a class="mr-2"
-               href="{% url 'profile' comment.author.id comment.author.username %}"> {{ comment.author.username }} </a>
-            <small class="text-muted"> {{ comment.created_date|date:"N d, o" }} </small>
-            {% if comment.author == user or user.is_superuser %}
-                <a class="btn btn-secondary btn-sm mt-1 mb-1 btn-light " href="{% url 'comment-update' comment.id %}">Edit</a>
-                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
-            {% endif %}
             {% if comment.is_approved %}
                 <img width="40px" src="{% static 'blog/solved_question.svg' %}" class="pull-right"
                      style="margin-top: 0">
             {% endif %}
             <p class="article-content">{{ comment.content }}</p>
-            {% if user == comment.question.author and comment.question.is_answered is False %}
-                <form method="POST"
-                      action={% url 'post-detail' comment.question.id comment.question.title comment.id %}>
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-sm mt-1 mb-1 btn-success" value="Solved my question"
-                           name='question_solved'/>
-                </form>
-            {% endif %}
+            <div class="author-info">
+                <img class="rounded-circle article-img" src="{{ posts.author.profile.image.url }} "/>
+                <a href="{% url 'profile' posts.author.id posts.author.username %}">{{ posts.author }}</a>
+                <small class="text-muted">{{ posts.post_date|date:"N d, o" }}</small>
+                <span class="badge">{{ posts.college }}</span>
+            </div>
+            {% if comment.author == user or user.is_superuser %}
+                <div class="post-edit float-right text-muted">
 
-        </div>
+                    <a class="mt-1 mb-1"
+                       href="{% url 'comment-update' comment.id %}">Edit</a>
+                    <a class=" mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
+                    {% if user == comment.question.author and comment.question.is_answered is False %}
+                        <form method="POST"
+                              action={% url 'post-detail' comment.question.id comment.question.title comment.id %}>
+                            {% csrf_token %}
+                            <input style="background-image:
+                                    url('{% static 'blog/solved_question.svg' %}');
+                                    background-repeat: no-repeat;"
+                                   type="submit" class="btn" value=" "
+                                   name='question_solved'/>
+                        </form>
+                    {% endif %}
+                </div>
+                </div>
+            {% endif %}
         </article>
         {% endfor %}
     {% endif %}

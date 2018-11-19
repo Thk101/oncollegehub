@@ -6,7 +6,7 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Delete Answer</legend>
-                <h2>Are you sure you want to delete "{{ object.content }}" </h2>
+                <h4>Are you sure you want to delete your answer? </h4>
                 <div class="form-group">
                     <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
                     <a href="{% url 'post-detail' object.question.id object.question.title %}"
